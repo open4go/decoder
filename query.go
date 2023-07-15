@@ -2,7 +2,6 @@ package decoder
 
 import (
 	"encoding/json"
-	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"net/url"
 )
@@ -49,9 +48,7 @@ func (u *UrlQuery) ExtractFilterAsKey2Map() []map[string]interface{} {
 	filterList := make([]map[string]interface{}, 0)
 	tmpFilter := make(map[string]interface{}, 0)
 	filters := u.QueryValue["filter"]
-	fmt.Println("filters==>", filters)
 	for _, f := range filters {
-		fmt.Println("f-->", f)
 		err := json.Unmarshal([]byte(f), &tmpFilter)
 		if err == nil {
 			filterList = append(filterList, tmpFilter)
@@ -85,6 +82,19 @@ func (u *UrlQuery) ExtractSortAsSlice() [][]string {
 	sortList := make([][]string, 0)
 	tmpSort := make([]string, 0)
 	sortString := u.QueryValue["sort"]
+	for _, f := range sortString {
+		err := json.Unmarshal([]byte(f), &tmpSort)
+		if err == nil {
+			sortList = append(sortList, tmpSort)
+		}
+	}
+	return sortList
+}
+
+func (u *UrlQuery) ExtractPage() [][]string {
+	sortList := make([][]string, 0)
+	tmpSort := make([]string, 0)
+	sortString := u.QueryValue["page"]
 	for _, f := range sortString {
 		err := json.Unmarshal([]byte(f), &tmpSort)
 		if err == nil {
