@@ -18,7 +18,7 @@ func TestPaserUrl(t *testing.T) {
 		{
 			"test",
 			args{
-				"filter={\"category_id\":\"646e2a2f4580dab0887c18be\", \"category_id2\":\"646e2a2f4580dab0887c18be\"}&range=[0,9]&sort=[\"id\",\"ASC\"]",
+				"filter=%7B%22id%22%3A%5B%22646ef266b96c04388d10157a%22%2C%22646ef29eb96c04388d10157d%22%5D%7D",
 			},
 			nil,
 		},
