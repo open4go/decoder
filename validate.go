@@ -16,7 +16,7 @@ var (
 	}
 
 	isQueryByRef = []string{
-		"filter",
+		"is_reference",
 	}
 )
 
