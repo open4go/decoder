@@ -121,11 +121,38 @@ func (u *UrlQuery) ExtractPage() [][]string {
 	return sortList
 }
 
-// ReferenceByID
+// ReferenceByMany
 // http://localhost:9998?filter={"id":[["643e12a0bc01c4620486c02d"],["646e072f7867f7b362260fbb"],[]]}
 // http://localhost:9998?filter={"id":["646e2a2f4580dab0887c18be","646e46354580dab0887c18cb","646f9336795f29e7772afa46"]}
 // ?filter={"id":["646e06f07867f7b362260fb9"]}
 func (u *UrlQuery) ReferenceByMany() []map[string][]string {
+	filters := u.QueryValue["filter"]
+	filterList := make([]map[string][]string, 0)
+	// example: {"id":["646ef266b96c04388d10157a","646ef29eb96c04388d10157d"]}
+	tmpFilter := make(map[string][][]string, 0)
+	for _, f := range filters {
+		err := json.Unmarshal([]byte(f), &tmpFilter)
+		if err == nil {
+			for k, v := range tmpFilter {
+
+				if len(v) > 0 {
+					m := map[string][]string{
+						k: v[0],
+					}
+					filterList = append(filterList, m)
+				}
+			}
+
+		}
+	}
+	return filterList
+}
+
+// ReferenceByOne
+// http://localhost:9998?filter={"id":[["643e12a0bc01c4620486c02d"],["646e072f7867f7b362260fbb"],[]]}
+// http://localhost:9998?filter={"id":["646e2a2f4580dab0887c18be","646e46354580dab0887c18cb","646f9336795f29e7772afa46"]}
+// ?filter={"id":["646e06f07867f7b362260fb9"]}
+func (u *UrlQuery) ReferenceByOne() []map[string][]string {
 	filters := u.QueryValue["filter"]
 	filterList := make([]map[string][]string, 0)
 	// example: {"id":["646ef266b96c04388d10157a","646ef29eb96c04388d10157d"]}

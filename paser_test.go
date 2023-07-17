@@ -18,7 +18,7 @@ func TestPaserUrl(t *testing.T) {
 		{
 			"test",
 			args{
-				"filter=%7B%22id%22%3A%5B%22646ef266b96c04388d10157a%22%2C%22646ef29eb96c04388d10157d%22%5D%7D",
+				"filter=%7B%22id%22%3A%5B%5B%22643e12a0bc01c4620486c02d%22%2C%22646e072f7867f7b362260fbb%22%5D%5D%7D",
 			},
 			nil,
 		},
