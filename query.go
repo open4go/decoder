@@ -152,6 +152,22 @@ func (u *UrlQuery) ReferenceByMany() []map[string][]string {
 	return filterList
 }
 
+// ReferenceUserInput {"id": ["xx01", "xx02"]}
+func (u *UrlQuery) ReferenceUserInput(f map[string][]string) []map[string][]string {
+	filterList := make([]map[string][]string, 0)
+	for k, v := range f {
+
+		if len(v) > 0 {
+			m := map[string][]string{
+				k: v,
+			}
+			filterList = append(filterList, m)
+		}
+	}
+
+	return filterList
+}
+
 // ReferenceByOne
 // http://localhost:9998?filter={"id":[["643e12a0bc01c4620486c02d"],["646e072f7867f7b362260fbb"],[]]}
 // http://localhost:9998?filter={"id":["646e2a2f4580dab0887c18be","646e46354580dab0887c18cb","646f9336795f29e7772afa46"]}
