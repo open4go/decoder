@@ -14,16 +14,16 @@ func TestVerifyQueryType(t *testing.T) {
 		{
 			"test 2",
 			args{
-				"http://localhost:9998/v1/auth/merchant/appcategory?filter=%7B%22id%22%3A%5B%22646e2a2f4580dab0887c18be%22%5D%7D",
+				"?filter=%7B%22id%22%3A%5B%22646e2a2f4580dab0887c18be%22%5D%7D",
 			},
 			1,
 		},
 		{
 			"test 2",
 			args{
-				"\nhttp://localhost:9998/v1/auth/merchant/appcategory?filter=%7B%7D&range=%5B0%2C24%5D&sort=%5B%22id%22%2C%22DESC%22%5D",
+				"?filter=%7B%22is_reference%22%3Atrue%2C%22id%22%3A%5B%2264b4c0adb408a4d5d2ca979d%22%5D%7D&range=%5B0%2C24%5D&sort=%5B%22id%22%2C%22DESC%22%5D",
 			},
-			1,
+			QueryByRef,
 		},
 	}
 	for _, tt := range tests {

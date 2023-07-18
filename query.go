@@ -129,15 +129,19 @@ func (u *UrlQuery) ReferenceByMany() []map[string][]string {
 	filters := u.QueryValue["filter"]
 	filterList := make([]map[string][]string, 0)
 	// example: {"id":["646ef266b96c04388d10157a","646ef29eb96c04388d10157d"]}
-	tmpFilter := make(map[string][][]string, 0)
+	tmpFilter := make(map[string][]string, 0)
 	for _, f := range filters {
 		err := json.Unmarshal([]byte(f), &tmpFilter)
+
+		// 移除埋点标注信息
+		delete(tmpFilter, "is_from_reference")
+
 		if err == nil {
 			for k, v := range tmpFilter {
 
 				if len(v) > 0 {
 					m := map[string][]string{
-						k: v[0],
+						k: v,
 					}
 					filterList = append(filterList, m)
 				}
@@ -213,4 +217,20 @@ func (u *UrlQuery) AsMongoFilterIn(fields []map[string][]string) bson.M {
 		}
 	}
 	return mongoFilters
+}
+
+func (u *UrlQuery) GenerateFilterByRef4Gin() bson.M {
+	x := u.ReferenceByMany()
+	filters := u.AsMongoFilterIn(x)
+	return filters
+}
+
+func (u *UrlQuery) GenerateFilter(fields []string) interface{} {
+
+	if u.QueryBy == QueryByRef {
+		return u.GenerateFilterByRef4Gin()
+	} else {
+		f := u.ExtractMapFilterAsKey2Map()
+		return u.AsMongoFilter(fields, f[0])
+	}
 }
