@@ -21,7 +21,7 @@ func TestCheckFilter(t *testing.T) {
 				"filter=%7B%22category_id%22%3A%22646e2a2f4580dab0887c18be%22%7D&range=%5B0%2C9%5D&sort=%5B%22id%22%2C%22ASC%22%5D",
 			},
 			bson.D{
-				{"category_id", "646e2a2f4580dab0887c18be"},
+				{Key: "category_id", Value: "646e2a2f4580dab0887c18be"},
 			},
 		},
 	}
