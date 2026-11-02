@@ -16,14 +16,10 @@ func MakeFilter(c *gin.Context, fields []string) interface{} {
 	if err != nil {
 		return nil
 	}
-	filterFields := make([]string, 0)
 	for _, i := range fields {
 		s := strings.Split(i, "=>")
 		if len(s) == 2 {
-			filterFields = append(filterFields, s[0])
 			f = f.Translate(s[0], s[1])
-		} else {
-			filterFields = append(filterFields, i)
 		}
 	}
 
